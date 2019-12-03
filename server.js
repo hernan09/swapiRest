@@ -1,8 +1,11 @@
 const express= require('express');
-
+const axios = require('axios');
 const app = express();
 
 const port = process.env.PORT || 5000;
+
+app.use(express.urlencoded({extended: false})); 
+app.use(express.json());
 
 app.use((req, res, next) => {
   
@@ -21,3 +24,21 @@ app.use((req, res, next) => {
 
       console.log(`http://localhost:${port}`)
   })
+
+  
+app.get('/peoples/:id',(req,res)=>{
+ 
+    let id = req.params.id
+    let respuesta;
+  axios.get(`https://swapi.co/api/people/${id}`).then(resp =>{
+    respuesta = resp;
+      console.log(respuesta)
+
+     
+  })
+
+  res.status(200).send({respuesta});
+  
+    
+});
+  
